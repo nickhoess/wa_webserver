@@ -3,7 +3,8 @@ package controllers
 import javax.inject._
 import play.api._
 import play.api.mvc._
-import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
+import de.htwg.se.muehle.controller.ControllerComponent.ControllerBaseImpl.Controller
+import de.htwg.se.muehle.model.FieldComponent.FieldBaseImpl.Field
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -11,7 +12,8 @@ import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
  */
 @Singleton
 class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
-
+  val test = new Field
+  val boa = test.mesh()
   /**
    * Create an Action to render an HTML page.
    *
@@ -20,8 +22,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * a path of `/`.
    */
   def index() = Action { implicit request: Request[AnyContent] =>
-    test = new ControllerInterface
-    Ok(views.html.index())
+    Ok(views.html.index(boa))
   }
 
 }
