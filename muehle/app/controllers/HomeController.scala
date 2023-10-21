@@ -3,6 +3,7 @@ package controllers
 import javax.inject._
 import play.api._
 import play.api.mvc._
+import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -19,6 +20,8 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * a path of `/`.
    */
   def index() = Action { implicit request: Request[AnyContent] =>
+    test = new ControllerInterface
     Ok(views.html.index())
   }
+
 }
