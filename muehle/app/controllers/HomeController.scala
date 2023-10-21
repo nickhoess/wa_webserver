@@ -5,6 +5,7 @@ import play.api._
 import play.api.mvc._
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerBaseImpl.Controller
 import de.htwg.se.muehle.model.FieldComponent.FieldBaseImpl.Field
+import de.htwg.se.muehle.Muehle
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -12,8 +13,12 @@ import de.htwg.se.muehle.model.FieldComponent.FieldBaseImpl.Field
  */
 @Singleton
 class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
-  val test = new Field
-  val boa = test.mesh()
+
+  val field = new Field
+
+  val controller = new Controller(field)
+  
+  val boa = controller.somethingToSrting()
   /**
    * Create an Action to render an HTML page.
    *
