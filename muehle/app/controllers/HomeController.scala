@@ -20,9 +20,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   val field = new Field
   val controller = new Controller(field)
-  val tui = new TUI(controller)
   
-  val boa = controller.field.mesh()
   /**
    * Create an Action to render an HTML page.
    *
@@ -31,10 +29,16 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * a path of `/`.
    */
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index(boa))
+    Ok(views.html.consoleOutput("Hello There!"))
   }
 
-  def test() = Action { implicit request: Request[AnyContent] =>   
+  def put(x: Int, y: Int) = Action { implicit request: Request[AnyContent] =>
+    controller.put(Some(controller.field.playerstatus), x , y)
+    val message = controller.field.mesh()
+    Ok(views.html.consoleOutput(message))
+  }
+
+  def dispfield() = Action { implicit request: Request[AnyContent] =>   
     controller.put(Some(controller.field.playerstatus), 1 , 1)
     val message = controller.field.mesh()
     Ok(views.html.consoleOutput(message))

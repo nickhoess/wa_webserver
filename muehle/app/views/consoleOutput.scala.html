@@ -3,10 +3,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Konsolenausgabe</title>
+    <title>Mühle Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+        }
+    </style>
 </head>
 <body>
-    <h1>Konsolenausgabe</h1>
-    <pre>@Html(message)</pre>
+    <h1>Mühle Game</h1>
+    <div id="content">
+        <pre>@Html(message)</pre>
+    </div>
 </body>
 </html>
+
