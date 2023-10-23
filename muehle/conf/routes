@@ -11,5 +11,4 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 
 GET     /test                         controllers.HomeController.printToConsole()
-GET     /test1                        controllers.HomeController.test()
-GET     /tui                          controllers.HomeController.runThat()
+GET     /put/:param1/:param2    controllers.HomeController.put(param1: Int, param2: Int)
