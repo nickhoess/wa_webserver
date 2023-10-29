@@ -29,24 +29,16 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * a path of `/`.
    */
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.consoleOutput("Hello There!"))
+    Ok(views.html.index())
   }
 
   def put(x: Int, y: Int) = Action { implicit request: Request[AnyContent] =>
-    controller.put(Some(controller.field.playerstatus), x , y)
+    controller.put(Some(controller.field.playerstatus), x, y)
     val message = controller.field.mesh()
     Ok(views.html.consoleOutput(message))
   }
-
-  def dispfield() = Action { implicit request: Request[AnyContent] =>   
-    controller.put(Some(controller.field.playerstatus), 1 , 1)
-    val message = controller.field.mesh()
-    Ok(views.html.consoleOutput(message))
-  }
-
 
   def printToConsole() = Action {
-    controller.put(Some(controller.field.playerstatus), 1 , 2)
     val message = controller.field.mesh()
     Ok(views.html.consoleOutput(message))
   }
