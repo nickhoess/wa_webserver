@@ -29,11 +29,13 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * a path of `/`.
    */
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+    Ok(views.html.front())
   }
 
-  def put(x: Int, y: Int) = Action { implicit request: Request[AnyContent] =>
-    controller.put(Some(controller.field.playerstatus), x, y)
+ def put() = Action { implicit request: Request[AnyContent]=> 
+    val param1 = request.body.asFormUrlEncoded.get("param1").mkString.toInt
+    val param2 = request.body.asFormUrlEncoded.get("param2").mkString.toInt
+    controller.put(Some(controller.field.playerstatus), param1 , param2)
     val message = controller.field.mesh()
     Ok(views.html.consoleOutput(message))
   }
