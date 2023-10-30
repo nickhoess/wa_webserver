@@ -23,6 +23,11 @@
     <div id="content">
         <pre>@Html(message)</pre>
     </div>
+    <form method="POST" action="/put">
+        <label for="spieler">Gib 2 Zahlen an</label>
+        <input type="text" id="firstNumber" name="param1" required>
+        <input type="text" id="secondNumber" name="param2" required>
+        <input type="submit" value="Submit">
 </body>
 </html>
 

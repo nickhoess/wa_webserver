@@ -1,6 +1,24 @@
-@(k : String)
+<!DOCTYPE html>
 
-@main("Welcome to Play") {
-  <text>@k</text>
-}
+<head>
+  <title>Mühle Game</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+      }
+      #content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 70vh;
+      }
+  </style>
+</head>
+<body>
+  <h1>Willkommen zu Mühle</h1>
+  <p>Klick auf den Button um ein Spiel zu starten</p>
+<a href="/test"><button>Spiel starten</button></a>  <a href="/rules"><button>Spielregeln</button></a> 
+</body>
 
