@@ -32,17 +32,24 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(views.html.front())
   }
 
- def put() = Action { implicit request: Request[AnyContent]=> 
+  def rules() = Action { implicit request: Request[AnyContent] => 
+    Ok(views.html.rules())
+  }
+
+  def start() = Action { implicit request: Request[AnyContent] => 
+    Ok(views.html.start())
+  }
+
+  def game() = Action { implicit request: Request[AnyContent] => 
+    Ok(views.html.game("Mühle Spiel"))
+  }
+
+  def put() = Action { request => 
     val param1 = request.body.asFormUrlEncoded.get("param1").mkString.toInt
     val param2 = request.body.asFormUrlEncoded.get("param2").mkString.toInt
     controller.put(Some(controller.field.playerstatus), param1 , param2)
     val message = controller.field.mesh()
-    Ok(views.html.consoleOutput(message))
-  }
-
-  def printToConsole() = Action {
-    val message = controller.field.mesh()
-    Ok(views.html.consoleOutput(message))
+    Ok(views.html.game(message))
   }
 
 }
