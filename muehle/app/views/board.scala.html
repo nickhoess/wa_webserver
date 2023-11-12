@@ -1,19 +1,231 @@
+@(controller: de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface)
+
+@player = @{
+	controller.field.player
+}
+
+@player1 = {Spieler 1}
+
+@player2 = {Spieler 2}
+
+@whitePiece = {<img src="@routes.Assets.versioned("images/whitePiece.png")">}
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")>
-		<script src="https://cdn.jsdelivr.net/npm/less" ></script>
 		<title> Mühle</title>
+    <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/styles.css")' />
+		<script src="https://cdn.jsdelivr.net/npm/less" ></script>
 </head>
 
 <body>
-	<h1 id="heading">Spielfeld</h1>
-		<div class="board">
-			<div class="cell"></div>
-			<div class="cell"></div>
-			<div class="cell"></div>
-	</div>
+	<h1 id="heading">Mühle</h1>
+	<div class="overlay">
+			<div class="player1Turn" id="player1Turn">
+				Spieler 1
+				<br></br>
+				<div class="playerStones">
+				@for(i <- 0 until controller.field.player.player1) {
+					<div class="cell white"></div>		
+				}
+				</div>
+		</div>
 
+	<div class="board">
+		<div class="cell" id="cell-0-6"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-3-6"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-6-6"></div>
+		
+		<div class="line vertical"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>
+
+		<div class="line vertical"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell" id="cell-1-5"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-3-5"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-5-5"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>		
+
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="cell" id="cell-2-4"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-3-4"></div>	
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-4-4"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		
+		<div class="cell" id="cell-0-3"></div>	
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-1-3"></div>	
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-2-3"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>	
+		<div class="cell-hidden"></div>
+		<div class="cell" id="cell-4-3"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-5-3"></div>	
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-6-3"></div>
+
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>
+
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="cell" id="cell-2-2"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-3-2"></div>	
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-4-2"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>	
+
+		<div class="line vertical"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell" id="cell-1-1"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-3-1"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-5-1"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>		
+
+		<div class="line vertical"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="cell-hidden"></div>
+		<div class="line vertical"></div>
+
+		<div class="cell" id="cell-0-0"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-3-0"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="line horizontal"></div>
+		<div class="cell" id="cell-6-0"></div>
+
+</div>
+
+<div class="player2Turn" id="player2Turn">
+		Spieler 2
+		<br></br>
+				<div class="playerStones">
+				@for(i <- 0 until controller.field.player.player1) {
+					<div class="cell black"></div>		
+				}
+				</div>
+		</div>
+</div>
 </body>
 </html>
