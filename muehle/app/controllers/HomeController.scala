@@ -29,19 +29,23 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * a path of `/`.
    */
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.front())
+    Ok(views.html.index())
   }
 
   def rules() = Action { implicit request: Request[AnyContent] => 
     Ok(views.html.rules())
   }
 
-  def start() = Action { implicit request: Request[AnyContent] => 
+  def board() = Action { implicit request: Request[AnyContent] => 
     Ok(views.html.board(controller))
   }
 
   def game() = Action { implicit request: Request[AnyContent] => 
     Ok(views.html.game("MILL GAME"))
+  }
+
+  def htmlGame() = Action { implicit request: Request[AnyContent] => 
+    Ok(views.html.htmlGame())
   }
 
   def put() = Action { request => 
