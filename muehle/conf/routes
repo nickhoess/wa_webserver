@@ -11,6 +11,6 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET     /rules                      controllers.HomeController.rules()
 
 GET     /htmlGame                    controllers.HomeController.htmlGame()
-POST     /put                       controllers.HomeController.put()
+POST     /put                    controllers.HomeController.put()
 GET     /game                       controllers.HomeController.game()
 GET     /board                       controllers.HomeController.board()
