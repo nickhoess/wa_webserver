@@ -10,22 +10,19 @@ function handleButtonClick(cellId) {
 
     var number1 = parseInt(parts[parts.length - 2]);
     var number2 = parseInt(parts[parts.length - 1]);
+    console.log('Clicked on cell ' + number1 + '-' + number2); 
 
-    if (isNaN(number1) || isNaN(number2)) {
-        console.error('Invalid number in cellId: ' + cellId);
-    } else {
-        fetch('/put', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ param1: number1, param2: number2 })
-        })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    }
-    
+    fetch('/put', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ param1: number1, param2: number2 })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch((error) => {
+        console.log('Error:', error);
+    });
+
 }
