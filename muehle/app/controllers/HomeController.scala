@@ -9,6 +9,7 @@ import de.htwg.se.muehle.aview.TUI
 import de.htwg.se.muehle.model.FieldComponent.{MuehlMatrix, Piece, Player}
 import play.api.data.Forms._
 import scala.io.StdIn.readLine
+import play.api.libs.json._
 
 
 /**
