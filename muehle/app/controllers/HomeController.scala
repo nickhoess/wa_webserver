@@ -57,7 +57,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     println(param2)
     controller.put(Some(controller.field.playerstatus), param1 , param2)
     val message = controller.field.mesh()
-    Ok(views.html.game(message))
+    Ok(views.html.interactive(controller, message))
   }
 
   def interactive() = Action { request => 
