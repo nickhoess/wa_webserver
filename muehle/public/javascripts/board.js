@@ -1,3 +1,6 @@
+var playerstatus;
+var gamestatus;
+
 function handleButtonClick(cellId) {
     var cell = document.getElementById(cellId);
 
@@ -20,9 +23,19 @@ function handleButtonClick(cellId) {
         body: JSON.stringify({ param1: number1, param2: number2 })
     })
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+        playerstatus = data.value1;
+        console.log('Playerstatus: ' + playerstatus);
+        gamestatus = data.value2;
+    })
     .catch((error) => {
         console.log('Error:', error);
     });
+
+    if (playerstatus == 'B') {
+        cell.style.backgroundColor = '#FFFFFF'
+    } else {
+        cell.style.backgroundColor = '#FF0000'
+    }
 
 }

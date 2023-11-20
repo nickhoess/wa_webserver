@@ -55,9 +55,15 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     val param2 = (jsonBody \ "param2").as[Int]
     println(param1)
     println(param2)
+    println(controller.field.playerstatus)
     controller.put(Some(controller.field.playerstatus), param1 , param2)
-    val message = controller.field.mesh()
-    Ok(views.html.interactive(controller, message))
+    val playerStatusString = controller.field.playerstatus.toString
+    val gameStatusString = controller.field.gamestatus.toString
+    val result = Json.obj(
+      "value1" -> Json.toJson(playerStatusString),
+      "value2" -> Json.toJson(gameStatusString)
+    )
+    Ok(result)
   }
 
   def interactive() = Action { request => 
