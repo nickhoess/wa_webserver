@@ -19,8 +19,8 @@ import play.api.libs.json._
 @Singleton
 class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
 
-  val field = new Field
-  val controller = new Controller(field)
+  var field = new Field
+  var controller = new Controller(field)
   
   /**
    * Create an Action to render an HTML page.
@@ -66,9 +66,45 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     Ok(result)
   }
 
+  def take() = Action(parse.json) { request =>
+    val jsonBody = request.body
+    val param1 = (jsonBody \ "param1").as[Int]
+    val param2 = (jsonBody \ "param2").as[Int]
+    println(param1)
+    println(param2)
+    println(controller.field.playerstatus)
+    controller.take(Some(controller.field.playerstatus), param1 , param2)
+    val playerStatusString = controller.field.playerstatus.toString
+    val gameStatusString = controller.field.gamestatus.toString
+    println(gameStatusString)
+    val result = Json.obj(
+      "value1" -> Json.toJson(playerStatusString),
+      "value2" -> Json.toJson(gameStatusString)
+    )
+    Ok(result)
+  }
+
+  def move() = Action(parse.json) { request =>
+    val jsonBody = request.body
+    val param1 = (jsonBody \ "param1").as[Int]
+    val param2 = (jsonBody \ "param2").as[Int]
+    val param3 = (jsonBody \ "param3").as[Int]
+    val param4 = (jsonBody \ "param4").as[Int]
+    controller.move(Some(controller.field.playerstatus), param1 , param2, param3, param4)
+    val playerStatusString = controller.field.playerstatus.toString
+    val gameStatusString = controller.field.gamestatus.toString
+    println(gameStatusString)
+    val result = Json.obj(
+      "value1" -> Json.toJson(playerStatusString),
+      "value2" -> Json.toJson(gameStatusString)
+    )
+    Ok(result)
+  }
+
   def interactive() = Action { request => 
-    val message = controller.field.mesh()
-    Ok(views.html.interactive(controller, message))
+    field = new Field
+    controller = new Controller(field)
+    Ok(views.html.interactive(controller))
   }
 
 }

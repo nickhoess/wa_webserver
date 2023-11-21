@@ -10,7 +10,6 @@ function handleClick(cellID) {
   } else if (clickCount === 2) {
     secondClickCellID = cellID;
     
-    // Hier könnte der POST-Request gesendet werden
     console.log('Erste CellID: ' + firstClickCellID);
     console.log('Zweite CellID: ' + secondClickCellID);
     
