@@ -32,6 +32,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
   
 
   class MuehleWebSocketActor(out: ActorRef) extends Actor with Reactor {
+    listenTo(controller)
     def receive = {
       case msg: String =>
         out ! println("Msg: "+ msg)

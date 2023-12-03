@@ -10,6 +10,8 @@ var cellIDnew = null;
 
 
 $(document).ready(function() {
+
+    connectWebSocket();
     // Reagiere auf Klicks auf alle Elemente mit der Klasse 'cell'
     $('.cell').click(function() {
         var cellId = $(this).attr('id'); // Hole die ID des geklickten Elements
@@ -141,4 +143,28 @@ function handleButtonClick(cellId) {
           cellIDold = null;
         }
     }
+}
+
+
+function connectWebSocket() {
+    var webSocket = new WebSocket("ws://localhost:9000/websocket");
+    
+    webSocket.onopen = function(event) {
+        console.log("Connected to Websocket");
+
+    }
+
+    webSocket.onmessage = function(message) {
+        const payload = message.data;
+    }
+
+    webSocket.onclose = function() {
+        console.log("Connection with Websocket closed!");
+    }
+
+    webSocket.onerror = function(error) {
+        consolse.log("Errow in Websocket at: " + error);
+    }
+
+
 }
