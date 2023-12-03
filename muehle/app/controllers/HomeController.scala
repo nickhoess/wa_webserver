@@ -4,6 +4,7 @@ import javax.inject._
 import play.api._
 import play.api.mvc._
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerBaseImpl.Controller
+import de.htwg.se.muehle.controller.ControllerComponent._
 import de.htwg.se.muehle.model.FieldComponent.FieldBaseImpl.Field
 import de.htwg.se.muehle.aview.TUI
 import de.htwg.se.muehle.model.FieldComponent.{MuehlMatrix, Piece, Player}
@@ -11,17 +12,60 @@ import play.api.data.Forms._
 import scala.io.StdIn.readLine
 import play.api.libs.json._
 
+import play.api.libs.streams.ActorFlow
+import akka.actor.ActorSystem
+import akka.stream.Materializer
+import akka.actor._
+
+import scala.swing.Reactor
+
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class HomeController @Inject()(val controllerComponents: ControllerComponents, implicit val system: ActorSystem) extends BaseController {
 
   var field = new Field
   var controller = new Controller(field)
   
+
+  class MuehleWebSocketActor(out: ActorRef) extends Actor with Reactor {
+    def receive = {
+      case msg: String =>
+        out ! println("Msg: "+ msg)
+    }
+
+    reactions += {
+        case event: fieldchange => 
+          //out ! sendJsonToClient
+          out ! "test"
+        }
+  }
+
+  object MuehleWebSocketActorFactory {
+    def create(out: ActorRef) = {
+      Props(new MuehleWebSocketActor(out))
+    }
+  }
+
+  def socket = WebSocket.accept[String, String] { request =>
+    ActorFlow.actorRef { out =>
+      println("Request received: " + request)
+      MuehleWebSocketActorFactory.create(out)
+    }
+  }
+
+  /*
+  def sendJsonToClient: Unit {
+    
+  }
+
+  */
+
+
+
   /**
    * Create an Action to render an HTML page.
    *

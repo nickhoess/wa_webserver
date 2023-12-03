@@ -15,6 +15,8 @@ GET     /game                       controllers.HomeController.game()
 GET     /board                       controllers.HomeController.board()
 GET     /interactive                       controllers.HomeController.interactive()
 
-POST     /put                    controllers.HomeController.put()
-POST     /take                   controllers.HomeController.take()
-POST     /move                   controllers.HomeController.move()
+POST    /put                    controllers.HomeController.put()
+POST    /take                   controllers.HomeController.take()
+POST    /move                   controllers.HomeController.move()
+
+GET     /websocket    controllers.HomeController.socket
