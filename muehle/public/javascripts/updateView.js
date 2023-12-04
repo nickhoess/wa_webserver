@@ -5,11 +5,14 @@ $(document).ready(function() {
 function updateField(y,x, yNew, xNew, playStone, action) { 
     console.log('updateField: ' + y + x + yNew + xNew + playStone + action);
 
-    var cell = document.getElementById('cell' + y + x);
+    var cellID = 'button-' + y + '-' + x;
+    console.log(cellID)
+
+    var cell = document.getElementById(cellID)
+
 
     switch(action) {
         case 'put':
-            var cell = document.getElementById('cell' + y + x)
             if (playStone == 'W') {
                 cell.style.backgroundColor = '#FFFFFF';
             } else if (playStone == 'B') {
@@ -21,7 +24,7 @@ function updateField(y,x, yNew, xNew, playStone, action) {
             cell.style.backgroundColor = '#000000';
             break;
         case 'move':
-            var cell = document.getElementById('cell' + y + x)
+            var cell = document.getElementById('cell-' + '-' + y + '-' + x)
             var cellNew = document.getElementById('cell' + yNew + xNew)
             
             cellNew.style.backgroundColor = cell.style.backgroundColor;
@@ -47,7 +50,7 @@ function connectWebSocket() {
     }
 
     webSocket.onmessage = function(message) {
-        const payload = message.data;
+        const payload = JSON.parse(message.data);
         updateField(payload.param1G, payload.param2G, payload.param3G, payload.param4G, payload.playerstatusG, payload.gamestatusG);
         console.log("payload: " + payload);
     }
