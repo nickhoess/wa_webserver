@@ -44,10 +44,16 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
     case msg: JsValue =>
       out ! msg
     }
+  
+  override def postStop(): Unit = {
+    MuehleWebSocketActorFactory.actors -= out
+  }
 
     reactions += {
         case event: fieldchange => 
           //out ! sendJsonToClient
+
+          println("Event received: " + event)
 
           val gameState = Json.obj(
           "param1G" -> param1G,
@@ -57,13 +63,19 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
           "playerstatusG" -> playerstatusG,
           "gamestatusG" -> gamestatusG)
 
-          out ! gameState
+          MuehleWebSocketActorFactory.sendToAll(gameState)
         }
   }
 
   object MuehleWebSocketActorFactory {
+    var actors: Set[ActorRef] = Set()
     def create(out: ActorRef) = {
+      actors += out
       Props(new MuehleWebSocketActor(out))
+    }
+
+    def sendToAll(message: JsValue): Unit = {
+    actors.foreach(_ ! message)
     }
   }
 
