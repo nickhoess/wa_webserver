@@ -3,6 +3,8 @@ $(document).ready(function() {
 });
 
 function updateField(y,x, yNew, xNew, playStone, action) { 
+    console.log('updateField: ' + y + x + yNew + xNew + playStone + action);
+
     var cell = document.getElementById('cell' + y + x);
 
     switch(action) {
@@ -46,9 +48,9 @@ function connectWebSocket() {
 
     webSocket.onmessage = function(message) {
         const payload = message.data;
-
-        updateFiled(payload.y, payload.x, payload.action);
-    }
+        updateField(payload.param1G, payload.param2G, payload.param3G, payload.param4G, payload.playerstatusG, payload.gamestatusG);
+        console.log("payload: " + payload);
+    }
 
     webSocket.onclose = function() {
         console.log("Connection with Websocket closed!");
@@ -57,6 +59,4 @@ function connectWebSocket() {
     webSocket.onerror = function(error) {
         consolse.log("Errow in Websocket at: " + error);
     }
-//test
-
 }

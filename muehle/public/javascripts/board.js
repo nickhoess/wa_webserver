@@ -11,7 +11,6 @@ var cellIDnew = null;
 
 $(document).ready(function() {
 
-    connectWebSocket();
     // Reagiere auf Klicks auf alle Elemente mit der Klasse 'cell'
     $('.cell').click(function() {
         var cellId = $(this).attr('id'); // Hole die ID des geklickten Elements
@@ -50,12 +49,6 @@ function handleButtonClick(cellId) {
                 console.log('Playerstatus: ' + playerstatus);
             gamestatus = data.value2;
 
-            if (playerstatus == 'W') {
-                cell.css('background-color', '#FFFFFF'); // .style.backgroundColor = '#FFFFFF'
-            } else if(playerstatus == 'B') {
-                cell.css('background-color', '#FF0000');
-            }
-
             playerstatus = data.value1;
             },
             error: function(xhr, status, error) {
@@ -80,8 +73,6 @@ function handleButtonClick(cellId) {
                 playerstatus = data.value1;
                 console.log('Playerstatus: ' + playerstatus);
                 gamestatus = data.value2;
-
-                cell.css('background-color', '#000000');
 
                 playerstatus = data.value1;
             },
@@ -116,14 +107,6 @@ function handleButtonClick(cellId) {
                     console.log('Playerstatus: ' + playerstatus);
                     gamestatus = data.value2;
 
-                    if (playerstatus == 'W') {
-                        cellIDold.css('background-color' , '#000000');
-                        cellIDnew.css('background-color' , '#FFFFFF');
-                        //document.getElementById(cellIDold).style.backgroundColor = '#000000'
-                    } else if(playerstatus == 'B') {
-                        cellIDold.css('background-color' , '#000000');
-                        cellIDnew.css('background-color' , '#FF0000');
-                        }
                     
                         playerstatus = data.value1;
                 },
@@ -145,27 +128,3 @@ function handleButtonClick(cellId) {
     }
 }
 
-
-function connectWebSocket() {
-    var webSocket = new WebSocket("ws://localhost:9000/websocket");
-    
-    webSocket.onopen = function(event) {
-        console.log("Connected to Websocket");
-
-    }
-
-    webSocket.onmessage = function(message) {
-        const payload = message.data;
-        console.log("payload: " + payload);
-    }
-
-    webSocket.onclose = function() {
-        console.log("Connection with Websocket closed!");
-    }
-
-    webSocket.onerror = function(error) {
-        consolse.log("Errow in Websocket at: " + error);
-    }
-
-
-}
