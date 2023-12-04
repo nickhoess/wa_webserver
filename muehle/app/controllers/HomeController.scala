@@ -71,6 +71,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
     var actors: Set[ActorRef] = Set()
     def create(out: ActorRef) = {
       actors += out
+      println("Actor created. Total actors: " + actors.size)
       Props(new MuehleWebSocketActor(out))
     }
 
@@ -82,7 +83,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
   def socket = WebSocket.accept[JsValue, JsValue] { request =>
   ActorFlow.actorRef { out =>
     println("Request received: " + request)
-    Props(new MuehleWebSocketActor(out))
+    MuehleWebSocketActorFactory.create(out)
   }
 }
 
