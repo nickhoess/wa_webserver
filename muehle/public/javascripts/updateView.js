@@ -57,6 +57,6 @@ function connectWebSocket() {
     webSocket.onerror = function(error) {
         consolse.log("Errow in Websocket at: " + error);
     }
-
+//test
 
 }
