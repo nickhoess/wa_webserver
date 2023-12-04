@@ -156,7 +156,8 @@ function connectWebSocket() {
 
     webSocket.onmessage = function(message) {
         const payload = message.data;
-    }
+        console.log("payload: " + payload);
+    }
 
     webSocket.onclose = function() {
         console.log("Connection with Websocket closed!");

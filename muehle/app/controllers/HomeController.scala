@@ -29,19 +29,35 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
 
   var field = new Field
   var controller = new Controller(field)
+
+  var param1G = 50
+  var param2G = 50
+  var param3G = 50
+  var param4G = 50
+  var playerstatusG = controller.field.playerstatus.toString
+  var gamestatusG = controller.field.gamestatus.toString
   
 
   class MuehleWebSocketActor(out: ActorRef) extends Actor with Reactor {
-    listenTo(controller)
-    def receive = {
-      case msg: String =>
-        out ! println("Msg: "+ msg)
+  listenTo(controller)
+  def receive = {
+    case msg: JsValue =>
+      out ! msg
     }
 
     reactions += {
         case event: fieldchange => 
           //out ! sendJsonToClient
-          out ! "test"
+
+          val gameState = Json.obj(
+          "param1G" -> param1G,
+          "param2G" -> param2G,
+          "param3G" -> param3G,
+          "param4G" -> param4G,
+          "playerstatusG" -> playerstatusG,
+          "gamestatusG" -> gamestatusG)
+
+          out ! gameState
         }
   }
 
@@ -51,29 +67,13 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
     }
   }
 
-  def socket = WebSocket.accept[String, String] { request =>
-    ActorFlow.actorRef { out =>
-      println("Request received: " + request)
-      MuehleWebSocketActorFactory.create(out)
-    }
+  def socket = WebSocket.accept[JsValue, JsValue] { request =>
+  ActorFlow.actorRef { out =>
+    println("Request received: " + request)
+    Props(new MuehleWebSocketActor(out))
   }
+}
 
-  /*
-  def sendJsonToClient: Unit {
-    
-  }
-
-  */
-
-
-
-  /**
-   * Create an Action to render an HTML page.
-   *
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
   def index() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index())
   }
@@ -101,6 +101,14 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
     println(param1)
     println(param2)
     println(controller.field.playerstatus)
+    //values for serverPush
+    param1G = param1
+    param2G = param2
+    param3G = 50
+    param4G = 50
+    playerstatusG = controller.field.playerstatus.toString
+    gamestatusG = controller.field.gamestatus.toString
+
     controller.put(Some(controller.field.playerstatus), param1 , param2)
     val playerStatusString = controller.field.playerstatus.toString
     val gameStatusString = controller.field.gamestatus.toString
