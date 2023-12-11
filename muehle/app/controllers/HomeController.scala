@@ -184,4 +184,12 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
     Ok(views.html.interactive(controller))
   }
 
+  def getplayer() = Action { request =>
+    val playerStatusString = controller.field.playerstatus.toString
+    val result = Json.obj(
+      "value1" -> Json.toJson(playerStatusString),
+    )
+    Ok(result)
+  }
+
 }
