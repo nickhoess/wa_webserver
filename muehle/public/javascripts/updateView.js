@@ -20,15 +20,14 @@ function updateField(y,x, yNew, xNew, playStone, action) {
             }
             break;
         case 'take':
-            var cell = document.getElementById('cell' + y + x)
             cell.style.backgroundColor = '#000000';
             break;
         case 'move':
-            var cell = document.getElementById('cell-' + '-' + y + '-' + x)
-            var cellNew = document.getElementById('cell' + yNew + xNew)
-            
-            cellNew.style.backgroundColor = cell.style.backgroundColor;
+            var cell = document.getElementById('button-'+ y + '-' + x)
+            var cellNew = document.getElementById('button-' + yNew + '-' + xNew)
+            var cellColorOld = cell.style.backgroundColor;
             cell.style.backgroundColor = '#000000';
+            cellNew.style.backgroundColor = cellColorOld;
 
             break;
         default:

@@ -139,10 +139,15 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
     println(param1)
     println(param2)
     println(controller.field.playerstatus)
+    playerstatusG = controller.field.playerstatus.toString
+    gamestatusG = controller.field.gamestatus.toString
+    param1G = param1
+    param2G = param2
+    param3G = 50
+    param4G = 50
     controller.take(Some(controller.field.playerstatus), param1 , param2)
     val playerStatusString = controller.field.playerstatus.toString
     val gameStatusString = controller.field.gamestatus.toString
-    println(gameStatusString)
     val result = Json.obj(
       "value1" -> Json.toJson(playerStatusString),
       "value2" -> Json.toJson(gameStatusString)
@@ -156,6 +161,12 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
     val param2 = (jsonBody \ "param2").as[Int]
     val param3 = (jsonBody \ "param3").as[Int]
     val param4 = (jsonBody \ "param4").as[Int]
+    playerstatusG = controller.field.playerstatus.toString
+    gamestatusG = controller.field.gamestatus.toString
+    param1G = param1
+    param2G = param2
+    param3G = param3
+    param4G = param4
     controller.move(Some(controller.field.playerstatus), param1 , param2, param3, param4)
     val playerStatusString = controller.field.playerstatus.toString
     val gameStatusString = controller.field.gamestatus.toString

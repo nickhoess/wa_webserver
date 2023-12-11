@@ -90,7 +90,7 @@ function handleButtonClick(cellId) {
             number2 = parseInt(parts[parts.length - 1]);
             cellIDold = cellId;
             console.log('Erste CellID: ' + number1 + '-' + number2);
-          return;
+            return;
         } else if (clickCounter === 2) {
             number1new = parseInt(parts[parts.length - 2]);
             number2new = parseInt(parts[parts.length - 1]);
