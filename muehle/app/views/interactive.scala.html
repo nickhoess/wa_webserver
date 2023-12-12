@@ -22,7 +22,7 @@
 			  <div class="playerStones">
 				<div class="cell white" v-for="i in player1Stones" :key="i"></div>
 			  </div>
-			  <p>Anzahl der Spielsteine: {{ player1Stones }}</p>
+			  <p>Spielsteine: {{ player1Stones }}</p>
 			</div>
 			<div class="col-6">
 				<div class="container">
@@ -601,9 +601,9 @@
 			<div class="player2Turn">
 			  Spieler 2 <br></br>
 			  <div class="playerStones">
-				<div class="cell white" v-for="i in player2Stones" :key="i"></div>
+				<div class="cell black" v-for="i in player2Stones" :key="i"></div>
 			  </div>
-			  <p>Anzahl der Spielsteine: {{ player2Stones }}</p>
+			  <p>Spielsteine: {{ player2Stones }}</p>
 			</div>
 		  </div>  
 		</div>
