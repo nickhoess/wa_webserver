@@ -8,15 +8,8 @@ GET     /                           controllers.HomeController.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
-GET     /rules                      controllers.HomeController.rules()
-
-GET     /htmlGame                    controllers.HomeController.htmlGame()
-GET     /game                       controllers.HomeController.game()
-GET     /board                       controllers.HomeController.board()
-GET     /interactive                       controllers.HomeController.interactive()
-
-POST    /put                    controllers.HomeController.put()
-POST    /take                   controllers.HomeController.take()
-POST    /move                   controllers.HomeController.move()
-
+GET /json   controllers.HomeController.getJson()
+GET /put  controllers.HomeController.put()
+GET /take  controllers.HomeController.take()
+GET /move  controllers.HomeController.move()
 GET     /websocket    controllers.HomeController.socket

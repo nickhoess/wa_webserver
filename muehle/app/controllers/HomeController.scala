@@ -30,13 +30,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
   var field = new Field
   var controller = new Controller(field)
 
-  var param1G = 50
-  var param2G = 50
-  var param3G = 50
-  var param4G = 50
-  var playerstatusG = controller.field.playerstatus.toString
-  var gamestatusG = controller.field.gamestatus.toString
-  
 
   class MuehleWebSocketActor(out: ActorRef) extends Actor with Reactor {
   listenTo(controller)
@@ -55,15 +48,9 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
 
           println("Event received: " + event)
 
-          val gameState = Json.obj(
-          "param1G" -> param1G,
-          "param2G" -> param2G,
-          "param3G" -> param3G,
-          "param4G" -> param4G,
-          "playerstatusG" -> playerstatusG,
-          "gamestatusG" -> gamestatusG)
-
-          MuehleWebSocketActorFactory.sendToAll(gameState)
+          val jsonMatrix = getJsonMatrix
+         
+          MuehleWebSocketActorFactory.sendToAll(jsonMatrix)
         }
   }
 
@@ -81,107 +68,59 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
   }
 
   def socket = WebSocket.accept[JsValue, JsValue] { request =>
-  ActorFlow.actorRef { out =>
+    ActorFlow.actorRef { out =>
     println("Request received: " + request)
     MuehleWebSocketActorFactory.create(out)
+    }
   }
-}
 
-  def index() = Action { implicit request: Request[AnyContent] =>
+  def getJsonMatrix: JsValue = {
+    val jsonMatrixCell = controller.field.matr.cellsToJsonString().noSpaces
+    val jsonMatrixMiddle = controller.field.matr.middleToJsonString().noSpaces
+
+    val jsonMatrixCellPlay = Json.parse(jsonMatrixCell) // Konvertiert das io.circe.Json-Objekt in ein play.api.libs.json.JsValue
+    val jsonMatrixMiddlePlay = Json.parse(jsonMatrixMiddle) // Konvertiert das io.circe.Json-Objekt in ein play.api.libs.json.JsValue
+
+    val playerStatus = Json.toJson(controller.field.playerstatus.toString) // Ersetzen Sie controller.playerStatus durch den tatsächlichen Wert
+    val gameStatus = Json.toJson(controller.field.gamestatus.toString) // Ersetzen Sie controller.gameStatus durch den tatsächlichen Wert
+
+    val combinedJson = jsonMatrixCellPlay.as[JsObject] ++ jsonMatrixMiddlePlay.as[JsObject] ++ Json.obj("playerStatus" -> playerStatus, "gameStatus" -> gameStatus) // Fügt die beiden JSON-Objekte und die neuen Werte zusammen
+
+    println("JSON: " + combinedJson)
+    combinedJson
+  }
+
+  def index = Action { implicit request: Request[AnyContent] =>
+    getJsonMatrix
     Ok(views.html.index())
   }
 
-  def rules() = Action { implicit request: Request[AnyContent] => 
-    Ok(views.html.rules())
+  def getJson = Action { implicit request: Request[AnyContent] =>
+    Ok(getJsonMatrix)
   }
 
-  def board() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.board(controller))
+  def put() = Action { implicit request: Request[AnyContent] =>
+      val col = 0
+      val row = 0
+      controller.put(Some(controller.field.playerstatus), row, col)
+      Ok(getJsonMatrix)
   }
 
-  def game() = Action { implicit request: Request[AnyContent] => 
-    Ok(views.html.game("MILL GAME"))
+  def take() = Action { implicit request: Request[AnyContent] =>
+      val col = 0
+      val row = 0
+      controller.take(Some(controller.field.playerstatus), row, col)
+      Ok(getJsonMatrix)
   }
 
-  def htmlGame() = Action { implicit request: Request[AnyContent] => 
-    Ok(views.html.htmlGame())
+  def move() = Action { implicit request: Request[AnyContent] =>
+      val col = 0
+      val row = 0
+      val colNew = 0
+      val rowNew = 1
+      controller.move(Some(controller.field.playerstatus), row, col, rowNew, colNew)
+      Ok(getJsonMatrix)
   }
-
-  def put() = Action(parse.json) { request =>
-    val jsonBody = request.body
-    val param1 = (jsonBody \ "param1").as[Int]
-    val param2 = (jsonBody \ "param2").as[Int]
-    println(param1)
-    println(param2)
-    println(controller.field.playerstatus)
-    //values for serverPush
-    param1G = param1
-    param2G = param2
-    param3G = 50
-    param4G = 50
-    playerstatusG = controller.field.playerstatus.toString
-    gamestatusG = controller.field.gamestatus.toString
-
-    controller.put(Some(controller.field.playerstatus), param1 , param2)
-    val playerStatusString = controller.field.playerstatus.toString
-    val gameStatusString = controller.field.gamestatus.toString
-    val result = Json.obj(
-      "value1" -> Json.toJson(playerStatusString),
-      "value2" -> Json.toJson(gameStatusString)
-    )
-    Ok(result)
-  }
-
-  def take() = Action(parse.json) { request =>
-    val jsonBody = request.body
-    val param1 = (jsonBody \ "param1").as[Int]
-    val param2 = (jsonBody \ "param2").as[Int]
-    println(param1)
-    println(param2)
-    println(controller.field.playerstatus)
-    playerstatusG = controller.field.playerstatus.toString
-    gamestatusG = controller.field.gamestatus.toString
-    param1G = param1
-    param2G = param2
-    param3G = 50
-    param4G = 50
-    controller.take(Some(controller.field.playerstatus), param1 , param2)
-    val playerStatusString = controller.field.playerstatus.toString
-    val gameStatusString = controller.field.gamestatus.toString
-    val result = Json.obj(
-      "value1" -> Json.toJson(playerStatusString),
-      "value2" -> Json.toJson(gameStatusString)
-    )
-    Ok(result)
-  }
-
-  def move() = Action(parse.json) { request =>
-    val jsonBody = request.body
-    val param1 = (jsonBody \ "param1").as[Int]
-    val param2 = (jsonBody \ "param2").as[Int]
-    val param3 = (jsonBody \ "param3").as[Int]
-    val param4 = (jsonBody \ "param4").as[Int]
-    playerstatusG = controller.field.playerstatus.toString
-    gamestatusG = controller.field.gamestatus.toString
-    param1G = param1
-    param2G = param2
-    param3G = param3
-    param4G = param4
-    controller.move(Some(controller.field.playerstatus), param1 , param2, param3, param4)
-    val playerStatusString = controller.field.playerstatus.toString
-    val gameStatusString = controller.field.gamestatus.toString
-    println(gameStatusString)
-    val result = Json.obj(
-      "value1" -> Json.toJson(playerStatusString),
-      "value2" -> Json.toJson(gameStatusString)
-    )
-    Ok(result)
-  }
-
-  def interactive() = Action { request => 
-    field = new Field
-    controller = new Controller(field)
-    Ok(views.html.interactive(controller))
-  }
+  
 
 }
